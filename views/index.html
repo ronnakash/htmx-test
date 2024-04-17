@@ -1,0 +1,25 @@
+{{ block "index" . }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="static/style.css" rel="stylesheet">
+    <title>Logs Dashboard</title>
+</head>
+<body>
+    <header>
+        <h1>Logs Dashboard</h1>
+    </header>
+    <div id="logs">
+        {{ range .Logs }}
+            <div class="log">
+                <p class="log-time">{{ .Time }}</p>
+                <p class="log-level">{{ .Level }}</p>
+                <p class="log-body">{{ .Body }}</p>
+            </div>
+        {{ end }}
+    </div>
+</body>
+</html>
+{{ end }}
