@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"io"
 	"math/rand"
@@ -32,6 +31,11 @@ type Log struct {
 	Level string
 	Time  string
 	Body  string
+}
+
+type FilterButtons struct {
+	Level string
+	Label string
 }
 
 func NewLog() Log {
@@ -84,7 +88,15 @@ func main() {
 	logs := []Log{NewLog(), NewLog(), NewLog(), NewLog(), NewLog(), NewLog(), NewLog(), NewLog(), NewLog(), NewLog()}
 
 	e.GET("/", func(c echo.Context) error {
-		return c.Render(200, "index", map[string]interface{}{})
+		return c.Render(200, "index", map[string]interface{}{
+			"Buttons": []FilterButtons{
+				{"error", "Error"},
+				{"warn", "Warn"},
+				{"info", "Info"},
+				{"debug", "Debug"},
+				{"", "All"},
+			},
+		})
 	})
 
 	e.GET("/logs", func(c echo.Context) error {

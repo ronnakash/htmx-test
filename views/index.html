@@ -49,11 +49,12 @@
 {{ define "levelFilter" }}
       <div id = filter>
         <p>Filter by Log Level:</p>
-        <button hx-post="/level" hx-trigger="click" hx-target="#logs" hx-vals='{"level": "error"}'>Error</button>
-        <button hx-post="/level" hx-trigger="click" hx-target="#logs" hx-vals='{"level": "warn"}'>Warning</button>
-        <button hx-post="/level" hx-trigger="click" hx-target="#logs" hx-vals='{"level": "info"}'>Info</button>
-        <button hx-post="/level" hx-trigger="click" hx-target="#logs" hx-vals='{"level": "debug"}'>Debug</button>
-        <button hx-post="/level" hx-trigger="click" hx-target="#logs" hx-vals="">All</button>
+        {{ range .Buttons }}
+          {{ template "filterButton" . }}
+        {{ end }}
       </div>
+{{ end }}
 
+{{ define "filterButton" }}
+  <button hx-post="/level" hx-trigger="click" hx-target="#logs" hx-vals='{"level": "{{ .Level }}"}'>{{ .Label }}</button>
 {{ end }}
