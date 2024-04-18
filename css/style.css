@@ -36,3 +36,18 @@
         .log-body {
             color: #333;
         }
+.log-level.error {
+    color: red;
+}
+
+.log-level.warn {
+    color: orange;
+}
+
+.log-level.info {
+    color: green;
+}
+
+.log-level.debug {
+    color: blue;
+}

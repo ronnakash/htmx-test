@@ -5,21 +5,55 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="static/style.css" rel="stylesheet">
+    <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
     <title>Logs Dashboard</title>
 </head>
 <body>
     <header>
         <h1>Logs Dashboard</h1>
     </header>
-    <div id="logs">
-        {{ range .Logs }}
-            <div class="log">
-                <p class="log-time">{{ .Time }}</p>
-                <p class="log-level">{{ .Level }}</p>
-                <p class="log-body">{{ .Body }}</p>
-            </div>
-        {{ end }}
-    </div>
+    {{ template "levelFilter" .}}
+    <div id="logs"></div>
 </body>
 </html>
+{{ end }}
+
+{{ block "logs" . }}
+  {{ range .Logs }}
+    {{ template "log" . }}
+  {{ end }}
+{{ end }}
+
+{{ block "log" . }}
+    <div class="log">
+      <p class="log-time">{{ .Time }}</p>
+      <p class="log-level" style="color: {{ template "logColor" . }}">{{ .Level }}</p>
+      <p class="log-body">{{ .Body }}</p>
+    </div>
+{{ end }}
+
+{{ block "logColor" . }}
+  {{ if eq .Level "error" }}
+    red
+  {{ else if eq .Level "warn" }}
+    orange
+  {{ else if eq .Level "info" }}
+    green
+  {{ else if eq .Level "debug" }}
+    blue
+  {{ else }}
+    black
+  {{ end }}
+{{ end }}
+
+{{ define "levelFilter" }}
+      <div id = filter>
+        <p>Filter by Log Level:</p>
+        <button hx-post="/level" hx-trigger="click" hx-target="#logs" hx-vals='{"level": "error"}'>Error</button>
+        <button hx-post="/level" hx-trigger="click" hx-target="#logs" hx-vals='{"level": "warn"}'>Warning</button>
+        <button hx-post="/level" hx-trigger="click" hx-target="#logs" hx-vals='{"level": "info"}'>Info</button>
+        <button hx-post="/level" hx-trigger="click" hx-target="#logs" hx-vals='{"level": "debug"}'>Debug</button>
+        <button hx-post="/level" hx-trigger="click" hx-target="#logs" hx-vals="">All</button>
+      </div>
+
 {{ end }}
