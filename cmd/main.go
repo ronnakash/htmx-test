@@ -36,6 +36,7 @@ type Log struct {
 type FilterButtons struct {
 	Level string
 	Label string
+	Class string
 }
 
 func NewLog() Log {
@@ -91,11 +92,11 @@ func main() {
 	e.GET("/", func(c echo.Context) error {
 		return c.Render(200, "index", map[string]interface{}{
 			"Buttons": []FilterButtons{
-				{"error", "Error"},
-				{"warn", "Warn"},
-				{"info", "Info"},
-				{"debug", "Debug"},
-				{"", "All"},
+				{"error", "Error", "danger"},
+				{"warn", "Warn", "warning"},
+				{"info", "Info", "info"},
+				{"debug", "Debug", "primary"},
+				{"", "All", "default"},
 			},
 		})
 	})

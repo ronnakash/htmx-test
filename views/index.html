@@ -13,49 +13,18 @@
   <header>
     <h1>Logs Dashboard</h1>
   </header>
-  {{ template "levelFilter" .}}
-  <div id="logs" hx-get="/logs" hx-trigger="load"></div>
+  {{ template "body" .}}
+  </div>
 </body>
 </html>
 {{ end }}
 
-{{ block "logs" . }}
-  {{ range .Logs }}
-    {{ template "log" . }}
-  {{ end }}
-{{ end }}
-
-{{ block "log" . }}
-  <div class="log">
-    <p class="log-time">{{ .Time }}</p>
-    <p class="log-level" style="color: {{ template "logColor" . }}">{{ .Level }}</p>
-    <p class="log-body">{{ .Body }}</p>
-  </div>
-{{ end }}
-
-{{ block "logColor" . }}
-  {{ if eq .Level "error" }}
-    red
-  {{ else if eq .Level "warn" }}
-    orange
-  {{ else if eq .Level "info" }}
-    green
-  {{ else if eq .Level "debug" }}
-    blue
-  {{ else }}
-    black
-  {{ end }}
-{{ end }}
-
-{{ define "levelFilter" }}
-    <div id = filter>
-      <p>Filter by Log Level:</p>
-      {{ range .Buttons }}
-        {{ template "filterButton" . }}
-      {{ end }}
+{{ block "body" . }}
+  <div class="container">
+    <div class="row" style="padding:20px;">
+      {{ template "logsFilter" . }}
     </div>
-{{ end }}
-
-{{ define "filterButton" }}
-  <button id= 'filter-btn-{{ .Label }}'hx-post="/level" hx-trigger="click" hx-target="#logs" hx-vals='{"level": "{{ .Level }}"}'>{{ .Label }}</button>
+    <div class="row" style="padding:20px;">
+      <table class="table table-striped table-hover" id="logs" hx-get="/logs" hx-trigger="load"></table>
+    </div>
 {{ end }}

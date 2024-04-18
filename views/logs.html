@@ -1,0 +1,61 @@
+
+{{ block "logs" . }}
+  {{ range .Logs }}
+    {{ template "log" . }}
+  {{ end }}
+{{ end }}
+
+{{ block "log" . }}
+  <tr class="row">
+    <td class="log-time col-md-4">{{ .Time }}</td>
+    <td class="log-level col-md-2" style="color: {{ template "logColor" . }}">{{ .Level }}</td>
+    <td class="log-body col-md-6">{{ .Body }}</td>
+  </tr>
+{{ end }}
+
+{{ block "logColor" . }}
+  {{ if eq .Level "error" }}
+    red
+  {{ else if eq .Level "warn" }}
+    orange
+  {{ else if eq .Level "info" }}
+    green
+  {{ else if eq .Level "debug" }}
+    blue
+  {{ else }}
+    black
+  {{ end }}
+{{ end }}
+
+{{ define "logsFilter" }}
+    <div id="filter" class="row col-lg-12">
+      <div id="search" class="col-md-6">
+       <input 
+        type="text" 
+        name="searchText"
+        hx-get="/search"
+        hx-trigger="keyup changed delay:500ms"
+        hx-target="#logs"
+        placeholder="Search..."
+    > 
+      </div>
+      <div id="buttons" class="col-md-6">
+        {{ range .Buttons }}
+          {{ template "filterButton" . }}
+        {{ end }}
+      </div>
+    </div>
+{{ end }}
+
+{{ define "filterButton" }}
+  <button 
+    id='filter-btn-{{ .Label }}'
+    type="button"
+    class='btn btn-{{ .Class }}'
+    hx-post="/level" 
+    hx-trigger="click" 
+    hx-target="#logs" 
+    hx-vals='{"level": "{{ .Level }}"}'>
+      {{ .Label }}
+  </button>
+{{ end }}
