@@ -1,9 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"io"
 	"math/rand"
+	"strings"
 	"time"
 
 	"github.com/labstack/echo/v4"
@@ -107,9 +109,11 @@ func main() {
 		})
 	})
 
-	e.POST("/level", func(c echo.Context) error {
+	e.POST("/filter", func(c echo.Context) error {
 		level := c.FormValue("level")
-		filteredLogs := filterLogsByLevel(logs, level)
+		searchText := c.FormValue("searchText")
+		filteredLogs := filterLogs(logs, level, searchText)
+		fmt.Printf("\n%s, %s, %v\n", level, searchText, filteredLogs)
 		return c.Render(200, "logs", map[string]interface{}{
 			"Logs": filteredLogs,
 		})
@@ -118,15 +122,21 @@ func main() {
 	e.Logger.Fatal(e.Start(":8080"))
 }
 
-func filterLogsByLevel(logs []Log, levelFilter string) []Log {
-	if levelFilter == "" {
-		return logs
-	}
+func filterLogs(logs []Log, levelFilter string, searchText string) []Log {
+	// if levelFilter == "" {
+	// 	return logs
+	// }
 
 	var filteredLogs []Log
 	for _, log := range logs {
-		if log.Level == levelFilter {
-			filteredLogs = append(filteredLogs, log)
+		// ChecBodyk if log matches the specified levelFilter
+		if levelFilter == "" || log.Level == levelFilter {
+			// Perform fuzzy text search within the log body
+			idx := strings.Index(strings.ToLower(log.Body), strings.ToLower(searchText))
+			fmt.Printf("loop: %s, %s, %d\n", strings.ToLower(log.Body), strings.ToLower(searchText), idx)
+			if idx >= 0 {
+				filteredLogs = append(filteredLogs, log)
+			}
 		}
 	}
 	return filteredLogs
