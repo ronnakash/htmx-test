@@ -96,7 +96,7 @@ func main() {
 			"Buttons": []FilterButtons{
 				{"error", "Error", "danger"},
 				{"warn", "Warn", "warning"},
-				{"info", "Info", "info"},
+				{"info", "Info", "success"},
 				{"debug", "Debug", "primary"},
 				{"", "All", "default"},
 			},
