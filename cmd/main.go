@@ -83,6 +83,7 @@ func main() {
 
 	e.Renderer = newTemplate()
 
+	// serve .css files from /css
 	e.Static("/static", "css")
 
 	logs := []Log{NewLog(), NewLog(), NewLog(), NewLog(), NewLog(), NewLog(), NewLog(), NewLog(), NewLog(), NewLog()}
@@ -118,7 +119,7 @@ func main() {
 
 func filterLogsByLevel(logs []Log, levelFilter string) []Log {
 	if levelFilter == "" {
-		return logs // Return all logs if no filter is specified
+		return logs
 	}
 
 	var filteredLogs []Log
@@ -128,5 +129,4 @@ func filterLogsByLevel(logs []Log, levelFilter string) []Log {
 		}
 	}
 	return filteredLogs
-	// return logs
 }

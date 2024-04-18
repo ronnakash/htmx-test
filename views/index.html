@@ -6,14 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="static/style.css" rel="stylesheet">
     <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <title>Logs Dashboard</title>
 </head>
 <body>
-    <header>
-        <h1>Logs Dashboard</h1>
-    </header>
-    {{ template "levelFilter" .}}
-    <div id="logs"></div>
+  <header>
+    <h1>Logs Dashboard</h1>
+  </header>
+  {{ template "levelFilter" .}}
+  <div id="logs" hx-get="/logs" hx-trigger="load"></div>
 </body>
 </html>
 {{ end }}
@@ -25,11 +26,11 @@
 {{ end }}
 
 {{ block "log" . }}
-    <div class="log">
-      <p class="log-time">{{ .Time }}</p>
-      <p class="log-level" style="color: {{ template "logColor" . }}">{{ .Level }}</p>
-      <p class="log-body">{{ .Body }}</p>
-    </div>
+  <div class="log">
+    <p class="log-time">{{ .Time }}</p>
+    <p class="log-level" style="color: {{ template "logColor" . }}">{{ .Level }}</p>
+    <p class="log-body">{{ .Body }}</p>
+  </div>
 {{ end }}
 
 {{ block "logColor" . }}
@@ -47,14 +48,14 @@
 {{ end }}
 
 {{ define "levelFilter" }}
-      <div id = filter>
-        <p>Filter by Log Level:</p>
-        {{ range .Buttons }}
-          {{ template "filterButton" . }}
-        {{ end }}
-      </div>
+    <div id = filter>
+      <p>Filter by Log Level:</p>
+      {{ range .Buttons }}
+        {{ template "filterButton" . }}
+      {{ end }}
+    </div>
 {{ end }}
 
 {{ define "filterButton" }}
-  <button hx-post="/level" hx-trigger="click" hx-target="#logs" hx-vals='{"level": "{{ .Level }}"}'>{{ .Label }}</button>
+  <button id= 'filter-btn-{{ .Label }}'hx-post="/level" hx-trigger="click" hx-target="#logs" hx-vals='{"level": "{{ .Level }}"}'>{{ .Label }}</button>
 {{ end }}
