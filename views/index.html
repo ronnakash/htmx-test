@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="static/style.css" rel="stylesheet">
   <script src="https://unpkg.com/htmx.org@1.7.0/dist/htmx.min.js"></script>
+  <script src="script/index.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <title>Logs Dashboard</title>
 
@@ -20,13 +21,6 @@
   {{ template "body" .}}
   </div>
 
-  <script>
-    // Function to update levelInput field
-    function updateLevel(level) {
-      document.getElementById('levelInput').value = level;
-    }
-  </script>
-
 </body>
 
 </html>
@@ -34,7 +28,7 @@
 
 {{ block "body" . }}
 <div class="container">
-  <div class="row" style="padding:1.5rem; padding-top:3rem;">
+  <div class="row" style="padding:1.5rem; margin-top:1.5rem;">
     {{ template "logsFilter" . }}
   </div>
   <div class="row" style="padding:1.5rem;">

@@ -86,8 +86,8 @@ func main() {
 
 	e.Renderer = newTemplate()
 
-	// serve .css files from /css
 	e.Static("/static", "css")
+	e.Static("/script", "js")
 
 	logs := []Log{NewLog(), NewLog(), NewLog(), NewLog(), NewLog(), NewLog(), NewLog(), NewLog(), NewLog(), NewLog()}
 
@@ -123,21 +123,15 @@ func main() {
 }
 
 func filterLogs(logs []Log, levelFilter string, searchText string) []Log {
-	// if levelFilter == "" {
-	// 	return logs
-	// }
-
 	var filteredLogs []Log
+
 	for _, log := range logs {
-		// ChecBodyk if log matches the specified levelFilter
 		if levelFilter == "" || log.Level == levelFilter {
-			// Perform fuzzy text search within the log body
-			idx := strings.Index(strings.ToLower(log.Body), strings.ToLower(searchText))
-			fmt.Printf("loop: %s, %s, %d\n", strings.ToLower(log.Body), strings.ToLower(searchText), idx)
-			if idx >= 0 {
+			if strings.Contains(strings.ToLower(log.Body), strings.ToLower(searchText)) {
 				filteredLogs = append(filteredLogs, log)
 			}
 		}
 	}
+
 	return filteredLogs
 }

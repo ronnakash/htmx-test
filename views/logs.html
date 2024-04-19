@@ -9,7 +9,7 @@
 {{ block "log" . }}
 <tr class="row">
   <td class="log-time col-md-3">{{ .Time }}</td>
-  <td class="log-level col-md-1" style="color: {{ template " logColor" . }}">{{ .Level }}</td>
+  <td class="log-level col-md-1" style='color: {{ template "logColor" . }}'>{{ .Level }}</td>
   <td class="log-body col-md-8">{{ .Body }}</td>
 </tr>
 {{ end }}
@@ -46,8 +46,8 @@ black
 
 {{ define "filterButton" }}
 <div class="col-sm-2">
-  <button id='filter-btn-{{ .Label }}' type="submit" class='btn btn-{{ .Class }}' onclick='updateLevel("{{ .Level }}")'
-    hx-trigger="click">
+  <button id='filter-btn-{{ .Label }}' type="submit" class='btn btn-{{ .Class }}'
+    onclick='window.updateLevel("{{ .Level }}")' hx-trigger="click">
     {{ .Label }}
   </button>
 </div>

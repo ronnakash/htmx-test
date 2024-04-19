@@ -3,4 +3,5 @@ function updateLevel(level) {
   document.getElementById('levelInput').value = level;
 }
 
-export default { updateLevel };
+console.log("hi");
+window.updateLevel = updateLevel;
