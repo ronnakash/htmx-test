@@ -1,6 +1,7 @@
 {{ block "index" . }}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
   <meta charset="utf-8">
@@ -11,6 +12,7 @@
   <title>Logs Dashboard</title>
 
 </head>
+
 <body>
   <header>
     <h1>Logs Dashboard</h1>
@@ -19,23 +21,24 @@
   </div>
 
   <script>
-  // Function to update levelInput field
-  function updateLevel(level) {
-    document.getElementById('levelInput').value = level;
-  }
-</script>
+    // Function to update levelInput field
+    function updateLevel(level) {
+      document.getElementById('levelInput').value = level;
+    }
+  </script>
 
 </body>
+
 </html>
 {{ end }}
 
 {{ block "body" . }}
-  <div class="container">
-    <div class="row" style="padding:1.5rem; padding-top:3rem;">
-      {{ template "logsFilter" . }}
-    </div>
-    <div class="row" style="padding:1.5rem;">
-      <table class="table table-striped" id="logs" hx-get="/logs" hx-trigger="load"></table>
-    </div>
+<div class="container">
+  <div class="row" style="padding:1.5rem; padding-top:3rem;">
+    {{ template "logsFilter" . }}
   </div>
+  <div class="row" style="padding:1.5rem;">
+    <table class="table table-striped" id="logs" hx-get="/logs" hx-trigger="load"></table>
+  </div>
+</div>
 {{ end }}
