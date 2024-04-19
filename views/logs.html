@@ -30,10 +30,9 @@ black
 
 
 {{ define "logsFilter" }}
-<form id="filterForm" hx-post="/filter" hx-target="#logs" class="row col-lg-12">
+<form id="filterForm" hx-post="/filter" hx-target="#logs" hx-trigger="textUpdate" class="row col-lg-12">
   <div id="search" class="col-md-6 row">
-    <input class="col-sm-10" type="text" name="searchText" hx-trigger="keyup changed delay:500ms"
-      placeholder="Search...">
+    <input class="col-sm-10" type="text" name="searchText" placeholder="Search...">
   </div>
   <div id="buttons" class="col-md-6 row">
     {{ range .Buttons }}

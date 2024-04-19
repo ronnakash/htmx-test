@@ -98,7 +98,7 @@ func main() {
 				{"warn", "Warn", "warning"},
 				{"info", "Info", "success"},
 				{"debug", "Debug", "primary"},
-				{"", "All", "default"},
+				{"", "All", "info"},
 			},
 		})
 	})
