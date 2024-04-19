@@ -3,3 +3,8 @@
 /node_modules/
 /views/**/*.go
 /.vscode/*
+/js/node_modules/*
+/js/node_modules/
+/js/*.json
+/js/*.yaml
+/js/*.mjs
