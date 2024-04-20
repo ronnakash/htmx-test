@@ -45,8 +45,7 @@ black
 
 {{ define "filterButton" }}
 <div class="col-sm-2">
-  <button id='filter-btn-{{ .Label }}' type="submit" class='btn btn-{{ .Class }}' onclick='updateLevel("{{ .Level }}")'
-    hx-trigger="click">
+  <button type="button" id='filter-btn-{{ .Label }}' class='btn btn-{{ .Class }}' onclick='updateLevel("{{ .Level }}")'>
     {{ .Label }}
   </button>
 </div>
